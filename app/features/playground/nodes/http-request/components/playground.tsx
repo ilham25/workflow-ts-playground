@@ -1,3 +1,13 @@
-export const HttpRequestNodePlayground = () => {
-  return <div>HttpRequestNode Playground</div>
+import { BaseNodeComponent } from "~/features/playground/components/node/base-node-component"
+import type { NodeComponentProps } from "../../types"
+
+export const HttpRequestNodePlayground = ({
+  node,
+  icon: Icon,
+}: NodeComponentProps) => {
+  return (
+    <BaseNodeComponent node={node}>
+      <Icon />
+    </BaseNodeComponent>
+  )
 }

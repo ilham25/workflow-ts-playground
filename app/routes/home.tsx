@@ -14,8 +14,42 @@ import {
 import { nodeTypes } from "~/features/playground/nodes"
 
 const initialNodes: Node[] = [
-  { id: "n1", position: { x: 0, y: 0 }, data: { label: "Node 1" } },
-  { id: "n2", position: { x: 0, y: 100 }, data: { label: "Node 2" } },
+  {
+    id: "n1",
+    type: "trigger",
+    position: { x: 0, y: 0 },
+    data: { label: "Node 1" },
+  },
+  {
+    id: "n2",
+    type: "httpRequest",
+    position: { x: 120, y: 0 },
+    data: { label: "Node 2" },
+  },
+  {
+    id: "n3",
+    type: "if",
+    position: { x: 240, y: 0 },
+    data: { label: "Node 2" },
+  },
+  {
+    id: "n4",
+    type: "log",
+    position: { x: 400, y: -120 },
+    data: { label: "Node 2" },
+  },
+  {
+    id: "n5",
+    type: "log",
+    position: { x: 400, y: 120 },
+    data: { label: "Node 2" },
+  },
+  {
+    id: "n6",
+    type: "merge",
+    position: { x: 600, y: 0 },
+    data: { label: "Node 2" },
+  },
 ]
 const initialEdges = [{ id: "n1-n2", source: "n1", target: "n2" }]
 
