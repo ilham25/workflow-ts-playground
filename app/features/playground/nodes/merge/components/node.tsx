@@ -1,10 +1,12 @@
 import { Merge } from "lucide-react"
-import type { NodeComponent } from "../../types"
 import { MergeNodePlayground } from "./playground"
 import { MergeNodeProperties } from "./properties"
+import type { AppNodeComponent } from "~/features/playground/types/app-node"
+import { MergeEdgeComponent } from "./edge"
 
-export const node: NodeComponent = {
+export const node: AppNodeComponent = {
   playgroundComponent: MergeNodePlayground,
   propertiesComponent: MergeNodeProperties,
+  edgeComponent: MergeEdgeComponent,
   icon: Merge,
 }

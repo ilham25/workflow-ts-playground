@@ -1,10 +1,12 @@
 import { Logs } from "lucide-react"
-import type { NodeComponent } from "../../types"
 import { LogNodePlayground } from "./playground"
 import { LogNodeProperties } from "./properties"
+import type { AppNodeComponent } from "~/features/playground/types/app-node"
+import { LogEdgeComponent } from "./edge"
 
-export const node: NodeComponent = {
+export const node: AppNodeComponent = {
   playgroundComponent: LogNodePlayground,
   propertiesComponent: LogNodeProperties,
+  edgeComponent: LogEdgeComponent,
   icon: Logs,
 }

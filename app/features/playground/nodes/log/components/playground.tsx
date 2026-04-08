@@ -1,7 +1,10 @@
 import { BaseNodeComponent } from "~/features/playground/components/node/base-node-component"
-import type { NodeComponentProps } from "../../types"
+import type { AppNodeComponentProps } from "~/features/playground/types/app-node"
+import { appNodeComponents } from "../.."
 
-export const LogNodePlayground = ({ node, icon: Icon }: NodeComponentProps) => {
+export const LogNodePlayground = ({ node }: AppNodeComponentProps) => {
+  const Icon = appNodeComponents[node.type].icon
+
   return (
     <BaseNodeComponent node={node}>
       <Icon />

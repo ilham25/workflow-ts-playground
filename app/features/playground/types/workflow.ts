@@ -1,5 +1,4 @@
-import type { BaseNodeParameters } from "../nodes/types/index.js"
-import type { NodeTypes } from "./node-type.js"
+import type { AppNodeTypes, BaseNodeParameters } from "./app-node"
 
 export interface Workflow {
   id: string
@@ -11,7 +10,7 @@ export interface Workflow {
 export interface WorkflowNode {
   id: string
   name: string
-  type: NodeTypes
+  type: AppNodeTypes
   parameters: BaseNodeParameters
 }
 

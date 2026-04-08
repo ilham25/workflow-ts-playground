@@ -1,16 +1,12 @@
 import { BaseNodeComponent } from "~/features/playground/components/node/base-node-component"
-import type { NodeComponentProps } from "../../types"
+import type { AppNodeComponentProps } from "~/features/playground/types/app-node"
+import { appNodeComponents } from "../.."
 
-export const TriggerNodePlayground = ({
-  node,
-  icon: Icon,
-}: NodeComponentProps) => {
+export const TriggerNodePlayground = ({ node }: AppNodeComponentProps) => {
+  const Icon = appNodeComponents[node.type].icon
+
   return (
-    <BaseNodeComponent
-      node={node}
-      isStartNode
-      className="outline-2 outline-offset-2 outline-red-500"
-    >
+    <BaseNodeComponent node={node} isStartNode className="">
       <Icon />
     </BaseNodeComponent>
   )

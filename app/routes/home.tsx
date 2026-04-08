@@ -10,59 +10,114 @@ import {
   type OnConnect,
   Background,
   BackgroundVariant,
+  type Edge,
 } from "@xyflow/react"
-import { nodeTypes } from "~/features/playground/nodes"
+import { edgeTypes, nodeTypes } from "~/features/playground/nodes"
+import type { AppEdge, AppNode } from "~/features/playground/types/app-node"
 
-const initialNodes: Node[] = [
+const initialNodes: AppNode[] = [
   {
     id: "n1",
     type: "trigger",
     position: { x: 0, y: 0 },
-    data: { label: "Node 1" },
+    data: {
+      name: "node-1",
+      displayName: "TriggerNode",
+      parameters: {},
+      _state: {
+        status: "success",
+      },
+    },
   },
   {
     id: "n2",
     type: "httpRequest",
     position: { x: 120, y: 0 },
-    data: { label: "Node 2" },
+    data: {
+      name: "node-2",
+      displayName: "Fetch User",
+      parameters: {
+        url: "https://jsonplaceholder.typicode.com/users/{{ $json.query.userId }}",
+        method: "GET",
+      },
+      _state: {
+        status: "processing",
+      },
+    },
   },
   {
     id: "n3",
     type: "if",
     position: { x: 240, y: 0 },
-    data: { label: "Node 2" },
+    data: {
+      name: "node-3",
+      displayName: "Check Active",
+      parameters: {
+        condition: "{{ $json.id > 3 }}",
+      },
+      _state: {
+        status: "idle",
+      },
+    },
   },
   {
     id: "n4",
     type: "log",
     position: { x: 400, y: -120 },
-    data: { label: "Node 2" },
+    data: {
+      name: "node-4",
+      displayName: "Log Active",
+      parameters: {
+        message: "{{ $json.name }} is active",
+      },
+      _state: {
+        status: "idle",
+      },
+    },
   },
   {
     id: "n5",
     type: "log",
     position: { x: 400, y: 120 },
-    data: { label: "Node 2" },
+    data: {
+      name: "node-5",
+      displayName: "Log Inctive",
+      parameters: {
+        message: "{{ $json.name }} is inactive",
+      },
+      _state: {
+        status: "idle",
+      },
+    },
   },
   {
     id: "n6",
     type: "merge",
     position: { x: 600, y: 0 },
-    data: { label: "Node 2" },
+    data: {
+      name: "node-6",
+      displayName: "Merge Results",
+      parameters: {
+        inputCounts: 2,
+      },
+      _state: {
+        status: "idle",
+      },
+    },
   },
 ]
-const initialEdges = [{ id: "n1-n2", source: "n1", target: "n2" }]
+const initialEdges: Edge[] = [{ id: "n1-n2", source: "n1", target: "n2" }]
 
 export default function Home() {
-  const [nodes, setNodes] = useState(initialNodes)
-  const [edges, setEdges] = useState(initialEdges)
+  const [nodes, setNodes] = useState<AppNode[]>(initialNodes)
+  const [edges, setEdges] = useState<Edge[]>(initialEdges)
 
-  const onNodesChange: OnNodesChange = useCallback(
+  const onNodesChange: OnNodesChange<AppNode> = useCallback(
     (changes) =>
       setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
     []
   )
-  const onEdgesChange: OnEdgesChange = useCallback(
+  const onEdgesChange: OnEdgesChange<Edge> = useCallback(
     (changes) =>
       setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
     []
