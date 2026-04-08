@@ -106,7 +106,14 @@ const initialNodes: AppNode[] = [
     },
   },
 ]
-const initialEdges: Edge[] = [{ id: "n1-n2", source: "n1", target: "n2" }]
+const initialEdges: Edge[] = [
+  { id: "n1-n2", source: "n1", target: "n2" },
+  { id: "n2-n3", source: "n2", target: "n3" },
+  { id: "n3-n4", source: "n3", sourceHandle: "output-0", target: "n4" },
+  { id: "n3-n5", source: "n3", sourceHandle: "output-1", target: "n5" },
+  { id: "n4-n6", source: "n4", targetHandle: "input-0", target: "n6" },
+  { id: "n5-n6", source: "n5", targetHandle: "input-1", target: "n6" },
+]
 
 export default function Home() {
   const [nodes, setNodes] = useState<AppNode[]>(initialNodes)

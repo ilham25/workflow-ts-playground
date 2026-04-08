@@ -1,6 +1,7 @@
 import { BaseNodeComponent } from "~/features/playground/components/node/base-node-component"
 import type { AppNodeComponentProps } from "~/features/playground/types/app-node"
 import { appNodeComponents } from "../.."
+import { Handle, Position } from "@xyflow/react"
 
 export const HttpRequestNodePlayground = ({ node }: AppNodeComponentProps) => {
   const Icon = appNodeComponents[node.type].icon
@@ -8,6 +9,8 @@ export const HttpRequestNodePlayground = ({ node }: AppNodeComponentProps) => {
   return (
     <BaseNodeComponent node={node}>
       <Icon />
+      <Handle type="target" position={Position.Left} />
+      <Handle type="source" position={Position.Right} />
     </BaseNodeComponent>
   )
 }
