@@ -11,6 +11,8 @@ export const TriggerNodeProperties = ({
       node={node}
       open={open}
       onOpenChange={onOpenChange}
+      inputNames={[]}
+      outputNames={[]}
     >
       <div>Trigger</div>
     </BasePropertiesComponent>

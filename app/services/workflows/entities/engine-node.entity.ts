@@ -60,7 +60,7 @@ export interface EngineIfNodeDescription extends BaseNodeTypeDescription {
 }
 
 export interface EngineIfNodeParameters extends BaseNodeParameters {
-  conditions: string
+  condition: string
 }
 
 // - Log
@@ -78,16 +78,16 @@ export interface EngineLogNodeParameters extends BaseNodeParameters {
 }
 
 // Merge Node
-export interface ENgineMergeNode extends BaseNodeType {
-  description: ENgineMergeNodeDescription
+export interface EngineMergeNode extends BaseNodeType {
+  description: EngineMergeNodeDescription
 }
 
-export interface ENgineMergeNodeDescription extends BaseNodeTypeDescription {
+export interface EngineMergeNodeDescription extends BaseNodeTypeDescription {
   type: "merge"
-  parameters: ENgineMergeNodeParameters
+  parameters: EngineMergeNodeParameters
 }
 
-export interface ENgineMergeNodeParameters extends BaseNodeParameters {
+export interface EngineMergeNodeParameters extends BaseNodeParameters {
   inputCounts: number
 }
 
@@ -96,7 +96,7 @@ export type EngineNodeType =
   | EngineHttpRequestNode
   | EngineIfNode
   | EngineLogNode
-  | ENgineMergeNode
+  | EngineMergeNode
 export type EngineNodeTypes = EngineNodeType["description"]["type"]
 
 export interface EngineNodeExecutionData {

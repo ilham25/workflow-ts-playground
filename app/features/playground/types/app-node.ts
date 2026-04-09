@@ -56,6 +56,8 @@ export type AppNodePropertiesComponentProps = {
   node: AppNode
   open: boolean
   onOpenChange: (open: boolean) => void
+  inputNames: string[]
+  outputNames: string[]
 }
 
 export type AppEdgeComponentProps = {

@@ -9,6 +9,8 @@ import {
 } from "~/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import type { AppNodePropertiesComponentProps } from "~/features/playground/types/app-node"
+import { JsonCodeEditor } from "../code/json-code-editor"
+import { Label } from "~/components/ui/label"
 
 interface BasePropertiesComponentProps extends AppNodePropertiesComponentProps {
   children: React.ReactNode
@@ -19,6 +21,8 @@ export const BasePropertiesComponent = ({
   onOpenChange,
   open,
   children,
+  outputNames,
+  inputNames,
 }: BasePropertiesComponentProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -34,35 +38,82 @@ export const BasePropertiesComponent = ({
             <Badge>{node.data.result.status}</Badge>
           </div>
         </DialogHeader>
-        <div className="flex h-[80dvh] flex-col bg-blue-500">
-          {children}
-          {node.data.result.status === "success" && (
-            <Tabs
-              defaultValue="input"
-              className="mt-2 flex w-full flex-1 grow flex-col bg-purple-300"
-            >
-              <TabsList className="w-full shrink-0" variant={"line"}>
-                <TabsTrigger value="input">Input</TabsTrigger>
-                <TabsTrigger value="output">Output</TabsTrigger>
-              </TabsList>
-              <TabsContent
-                value="input"
-                className="min-h-0 flex-1 overflow-auto"
-              >
-                <pre className="rounded-md bg-muted p-2">
-                  {JSON.stringify(node.data.result.input, null, 2)}
-                </pre>
-              </TabsContent>
-              <TabsContent
-                value="output"
-                className="min-h-0 flex-1 overflow-auto"
-              >
-                {/* <pre className="rounded-md bg-muted p-2">
-                  {JSON.stringify(node.data.result.output, null, 2)}
-                </pre> */}
-              </TabsContent>
-            </Tabs>
-          )}
+        <div className="grid max-h-[80dvh] grid-cols-3 gap-2">
+          <div className="col-span-1 h-[50dvh] w-full overflow-auto rounded-md border p-2">
+            <Label className="mb-2">Input</Label>
+            {node.data.result.status === "success" && (
+              <>
+                {!inputNames.length ? (
+                  <JsonCodeEditor
+                    value={JSON.stringify(node.data.result.input[0], null, 2)}
+                  />
+                ) : (
+                  <Tabs defaultValue={inputNames[0]}>
+                    <TabsList className="shrink-0" variant={"line"}>
+                      {inputNames.map((name) => (
+                        <TabsTrigger key={name} value={name}>
+                          {name}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                    {inputNames.map((name, index) => (
+                      <TabsContent key={name} value={name} className="min-h-0">
+                        {node.data.result.status === "success" && (
+                          <JsonCodeEditor
+                            value={JSON.stringify(
+                              node.data.result.input[index],
+                              null,
+                              2
+                            )}
+                          />
+                        )}
+                      </TabsContent>
+                    ))}
+                  </Tabs>
+                )}
+              </>
+            )}
+          </div>
+          <div className="col-span-1 rounded-md border p-2">{children}</div>
+          <div className="col-span-1 h-[50dvh] w-full overflow-auto rounded-md border p-2">
+            <Label className="mb-2">Output</Label>
+            {node.data.result.status === "success" && (
+              <>
+                {!outputNames.length ? (
+                  <JsonCodeEditor
+                    value={JSON.stringify(node.data.result.output[0], null, 2)}
+                  />
+                ) : (
+                  <Tabs defaultValue={outputNames[0]}>
+                    <TabsList className="shrink-0" variant={"line"}>
+                      {outputNames.map((name) => (
+                        <TabsTrigger key={name} value={name}>
+                          {name}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                    {outputNames.map((name, index) => (
+                      <TabsContent
+                        key={name}
+                        value={name}
+                        className="min-h-0 overflow-auto"
+                      >
+                        {node.data.result.status === "success" && (
+                          <JsonCodeEditor
+                            value={JSON.stringify(
+                              node.data.result.output[index],
+                              null,
+                              2
+                            )}
+                          />
+                        )}
+                      </TabsContent>
+                    ))}
+                  </Tabs>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
