@@ -19,7 +19,6 @@ export const api = {
   },
   post: async <T>(url: string, body: any): Promise<ApiResponseDTO<T>> => {
     try {
-      console.log(url, "url")
       const response = await fetch(`${baseUrl}${url}`, {
         method: "POST",
         headers: {

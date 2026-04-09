@@ -1,24 +1,7 @@
-import { useCallback, useState } from "react"
-import {
-  ReactFlow,
-  applyNodeChanges,
-  applyEdgeChanges,
-  addEdge,
-  type OnNodesChange,
-  type Node,
-  type OnEdgesChange,
-  type OnConnect,
-  Background,
-  BackgroundVariant,
-  type Edge,
-  type NodeProps,
-} from "@xyflow/react"
-import {
-  appNodeComponents,
-  edgeTypes,
-  nodeTypes,
-} from "~/features/playground/nodes"
-import type { AppEdge, AppNode } from "~/features/playground/types/app-node"
+import { useState } from "react"
+import { ReactFlow, Background, BackgroundVariant } from "@xyflow/react"
+import { appNodeComponents, nodeTypes } from "~/features/playground/nodes"
+import type { AppNode } from "~/features/playground/types/app-node"
 import { Button } from "~/components/ui/button"
 import { useWorkflowExecution } from "~/services/workflows/hooks/use-workflow-execution"
 import { usePlaygroundData } from "~/features/playground/hooks/use-playground-data"
@@ -29,33 +12,21 @@ export default function Home() {
   const { edges, setNodes, nodes, onNodesChange, onEdgesChange, onConnect } =
     usePlaygroundData(workflowId)
   const { execute } = useWorkflowExecution((data) => {
-    setNodes((nodes) =>
-      nodes.map((node) => {
+    setNodes((prev) =>
+      prev.map((node): AppNode => {
         if (node.id !== data.node.description.name) return node
 
         switch (data.status) {
           case "idle":
             return {
               ...node,
-              data: {
-                ...node.data,
-                result: {
-                  status: "idle",
-                },
-              },
-            }
-
+              data: { ...node.data, result: { status: "idle" } },
+            } as AppNode
           case "processing":
             return {
               ...node,
-              data: {
-                ...node.data,
-                result: {
-                  status: "processing",
-                },
-              },
-            }
-
+              data: { ...node.data, result: { status: "processing" } },
+            } as AppNode
           case "success":
             return {
               ...node,
@@ -67,20 +38,15 @@ export default function Home() {
                   output: data.data.output,
                 },
               },
-            }
-
+            } as AppNode
           case "error":
             return {
               ...node,
               data: {
                 ...node.data,
-                result: {
-                  status: "error",
-                  error: data.data.error,
-                },
+                result: { status: "error", error: data.data.error },
               },
-            }
-
+            } as AppNode
           default:
             return node
         }
@@ -107,6 +73,7 @@ export default function Home() {
         onNodeClick={(_, node) => {
           setActiveNode(node)
         }}
+        snapToGrid
       >
         <Background variant={BackgroundVariant.Dots} />
       </ReactFlow>
@@ -120,6 +87,8 @@ export default function Home() {
               setActiveNode(null)
             }
           }}
+          inputNames={[]}
+          outputNames={[]}
         />
       )}
 
@@ -128,16 +97,18 @@ export default function Home() {
           size={"lg"}
           onClick={() => {
             setNodes((nodes) =>
-              nodes.map((node) => ({
-                ...node,
-                data: {
-                  ...node.data,
-                  result: {
-                    status: "idle",
-                    error: undefined,
-                  },
-                },
-              }))
+              nodes.map(
+                (node) =>
+                  ({
+                    ...node,
+                    data: {
+                      ...node.data,
+                      result: {
+                        status: "idle",
+                      },
+                    },
+                  }) as AppNode
+              )
             )
             execute({ jobId: "job-001", workflowId })
           }}

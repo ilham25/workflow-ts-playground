@@ -8,7 +8,7 @@ export const LogNodePlayground = ({ node }: AppNodeComponentProps) => {
 
   return (
     <BaseNodeComponent node={node}>
-      <Icon />
+      <Icon className="text-amber-500" />
       <Handle type="target" id="input-0" position={Position.Left} />
       <Handle type="source" id="output-0" position={Position.Right} />
     </BaseNodeComponent>

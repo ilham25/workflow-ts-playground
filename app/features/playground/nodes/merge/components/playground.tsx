@@ -8,7 +8,7 @@ export const MergeNodePlayground = ({ node }: AppNodeComponentProps) => {
 
   return (
     <BaseNodeComponent node={node}>
-      <Icon />
+      <Icon className="text-cyan-500" />
       <Handle
         type="target"
         position={Position.Left}

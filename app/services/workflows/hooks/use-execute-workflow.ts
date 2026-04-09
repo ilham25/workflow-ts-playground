@@ -19,7 +19,6 @@ export const useExecuteWorkflow = (
   >({
     ...options,
     mutationFn: async (payload) => {
-      console.log("payload", payload)
       return workflowApi.execute(payload) as Promise<
         ApiSuccessResponseDTO<ExecuteWorkflowEntity>
       >

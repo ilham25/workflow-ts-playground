@@ -20,18 +20,23 @@ export const BaseNodeComponent = ({
   const result = node.data.result
 
   return (
-    <div
-      className={cn(
-        "flex h-20 w-20 items-center justify-center rounded-md border border-border bg-muted outline-2 outline-offset-2 outline-transparent",
-        isStartNode && "rounded-l-3xl",
-        isEndNode && "rounded-r-3xl",
-        result.status === "processing" && "outline-orange-200",
-        result.status === "success" && "outline-green-200",
-        result.status === "error" && "outline-red-200",
-        className
-      )}
-    >
-      {children}
+    <div className="relative flex flex-col items-center">
+      <div
+        className={cn(
+          "flex h-20 w-20 items-center justify-center rounded-md border border-border bg-muted outline-2 outline-offset-2 outline-transparent",
+          isStartNode && "rounded-l-3xl",
+          isEndNode && "rounded-r-3xl",
+          result.status === "processing" && "outline-yellow-500",
+          result.status === "success" && "outline-green-500",
+          result.status === "error" && "outline-red-500",
+          className
+        )}
+      >
+        {children}
+      </div>
+      <div className="pointer-events-none absolute top-full left-1/2 mt-1 max-w-20 -translate-x-1/2 text-center text-xs whitespace-nowrap text-gray-500">
+        {node.data.displayName}
+      </div>
     </div>
   )
 }

@@ -5,11 +5,10 @@ import { Handle, Position } from "@xyflow/react"
 
 export const HttpRequestNodePlayground = ({ node }: AppNodeComponentProps) => {
   const Icon = appNodeComponents[node.type].icon
-  const Properties = appNodeComponents[node.type].propertiesComponent
 
   return (
     <BaseNodeComponent node={node}>
-      <Icon />
+      <Icon className="text-purple-500" />
       <Handle type="target" id="input-0" position={Position.Left} />
       <Handle type="source" id="output-0" position={Position.Right} />
     </BaseNodeComponent>

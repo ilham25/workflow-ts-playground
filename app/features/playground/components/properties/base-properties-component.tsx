@@ -11,6 +11,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import type { AppNodePropertiesComponentProps } from "~/features/playground/types/app-node"
 import { JsonCodeEditor } from "../code/json-code-editor"
 import { Label } from "~/components/ui/label"
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "~/components/ui/empty"
+import { Braces } from "lucide-react"
 
 interface BasePropertiesComponentProps extends AppNodePropertiesComponentProps {
   children: React.ReactNode
@@ -41,6 +49,19 @@ export const BasePropertiesComponent = ({
         <div className="grid max-h-[80dvh] grid-cols-3 gap-2">
           <div className="col-span-1 h-[50dvh] w-full overflow-auto rounded-md border p-2">
             <Label className="mb-2">Input</Label>
+            {node.data.result.status !== "success" && (
+              <Empty>
+                <EmptyHeader>
+                  <EmptyMedia variant="icon">
+                    <Braces />
+                  </EmptyMedia>
+                  <EmptyTitle>No Input Yet</EmptyTitle>
+                  <EmptyDescription>
+                    This node has no input yet.
+                  </EmptyDescription>
+                </EmptyHeader>
+              </Empty>
+            )}
             {node.data.result.status === "success" && (
               <>
                 {!inputNames.length ? (
@@ -77,6 +98,19 @@ export const BasePropertiesComponent = ({
           <div className="col-span-1 rounded-md border p-2">{children}</div>
           <div className="col-span-1 h-[50dvh] w-full overflow-auto rounded-md border p-2">
             <Label className="mb-2">Output</Label>
+            {node.data.result.status !== "success" && (
+              <Empty>
+                <EmptyHeader>
+                  <EmptyMedia variant="icon">
+                    <Braces />
+                  </EmptyMedia>
+                  <EmptyTitle>No Output Yet</EmptyTitle>
+                  <EmptyDescription>
+                    This node has no output yet.
+                  </EmptyDescription>
+                </EmptyHeader>
+              </Empty>
+            )}
             {node.data.result.status === "success" && (
               <>
                 {!outputNames.length ? (

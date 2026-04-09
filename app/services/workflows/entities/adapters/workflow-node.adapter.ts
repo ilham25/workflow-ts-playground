@@ -44,7 +44,7 @@ export const toPlaygroundData = (workflow?: Workflow): PlaygroundData => {
           status: "idle",
         },
       },
-    }
+    } as AppNode
   })
 
   const edges: Edge[] = engineNodes
