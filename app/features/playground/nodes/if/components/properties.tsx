@@ -1,3 +1,18 @@
-export const IfNodeProperties = () => {
-  return <div>IfNode Properties</div>
+import { BasePropertiesComponent } from "~/features/playground/components/properties/base-properties-component"
+import type { AppNodePropertiesComponentProps } from "~/features/playground/types/app-node"
+
+export const IfNodeProperties = ({
+  node,
+  onOpenChange,
+  open,
+}: AppNodePropertiesComponentProps) => {
+  return (
+    <BasePropertiesComponent
+      node={node}
+      open={open}
+      onOpenChange={onOpenChange}
+    >
+      <div>If</div>
+    </BasePropertiesComponent>
+  )
 }

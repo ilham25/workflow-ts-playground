@@ -11,8 +11,13 @@ import {
   Background,
   BackgroundVariant,
   type Edge,
+  type NodeProps,
 } from "@xyflow/react"
-import { edgeTypes, nodeTypes } from "~/features/playground/nodes"
+import {
+  appNodeComponents,
+  edgeTypes,
+  nodeTypes,
+} from "~/features/playground/nodes"
 import type { AppEdge, AppNode } from "~/features/playground/types/app-node"
 import { Button } from "~/components/ui/button"
 import { useWorkflowExecution } from "~/services/workflows/hooks/use-workflow-execution"
@@ -28,24 +33,66 @@ export default function Home() {
       nodes.map((node) => {
         if (node.id !== data.node.description.name) return node
 
-        let error: string | undefined
-        if (data.status === "error") {
-          error = data.data.error
-        }
+        switch (data.status) {
+          case "idle":
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                result: {
+                  status: "idle",
+                },
+              },
+            }
 
-        return {
-          ...node,
-          data: {
-            ...node.data,
-            _state: {
-              status: data.status,
-              error,
-            },
-          },
+          case "processing":
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                result: {
+                  status: "processing",
+                },
+              },
+            }
+
+          case "success":
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                result: {
+                  status: "success",
+                  input: data.data.input,
+                  output: data.data.output,
+                },
+              },
+            }
+
+          case "error":
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                result: {
+                  status: "error",
+                  error: data.data.error,
+                },
+              },
+            }
+
+          default:
+            return node
         }
       })
     )
   })
+
+  const [activeNode, setActiveNode] = useState<AppNode | null>(null)
+
+  const Properties = !activeNode
+    ? null
+    : appNodeComponents[activeNode.type].propertiesComponent
 
   return (
     <div className="relative h-screen w-screen">
@@ -57,9 +104,24 @@ export default function Home() {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         fitView
+        onNodeClick={(_, node) => {
+          setActiveNode(node)
+        }}
       >
         <Background variant={BackgroundVariant.Dots} />
       </ReactFlow>
+
+      {Properties && (
+        <Properties
+          node={activeNode!}
+          open={Boolean(activeNode)}
+          onOpenChange={(open) => {
+            if (!open) {
+              setActiveNode(null)
+            }
+          }}
+        />
+      )}
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
         <Button
@@ -70,7 +132,7 @@ export default function Home() {
                 ...node,
                 data: {
                   ...node.data,
-                  _state: {
+                  result: {
                     status: "idle",
                     error: undefined,
                   },

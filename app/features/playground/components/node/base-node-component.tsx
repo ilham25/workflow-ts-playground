@@ -17,7 +17,7 @@ export const BaseNodeComponent = ({
   className,
   node,
 }: BaseNodeComponentProps) => {
-  const state = node.data._state
+  const result = node.data.result
 
   return (
     <div
@@ -25,9 +25,9 @@ export const BaseNodeComponent = ({
         "flex h-20 w-20 items-center justify-center rounded-md border border-border bg-muted outline-2 outline-offset-2 outline-transparent",
         isStartNode && "rounded-l-3xl",
         isEndNode && "rounded-r-3xl",
-        state.status === "processing" && "outline-orange-200",
-        state.status === "success" && "outline-green-200",
-        state.status === "error" && "outline-red-200",
+        result.status === "processing" && "outline-orange-200",
+        result.status === "success" && "outline-green-200",
+        result.status === "error" && "outline-red-200",
         className
       )}
     >

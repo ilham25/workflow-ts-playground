@@ -5,6 +5,7 @@ import { Handle, Position } from "@xyflow/react"
 
 export const HttpRequestNodePlayground = ({ node }: AppNodeComponentProps) => {
   const Icon = appNodeComponents[node.type].icon
+  const Properties = appNodeComponents[node.type].propertiesComponent
 
   return (
     <BaseNodeComponent node={node}>

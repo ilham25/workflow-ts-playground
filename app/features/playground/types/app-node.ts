@@ -9,6 +9,7 @@ import type { MergeEdge, MergeNode } from "../nodes/merge/types"
 import type { TriggerEdge, TriggerNode } from "../nodes/trigger/types"
 import type React from "react"
 import type { EdgeProps, NodeProps } from "@xyflow/react"
+import type { EngineNodeExecutionData } from "~/services/workflows/entities/engine-node.entity"
 
 export type BaseNodeParameters = Record<
   string,
@@ -19,16 +20,42 @@ export type BaseNodeData = {
   name: string
   displayName: string
   parameters: BaseNodeParameters
-  _state: BaseNodeState
+  result: AppNodeResult
 }
 
-export type BaseNodeState = {
-  status: "idle" | "processing" | "success" | "error"
-  error?: string
+export type AppNodeIdleResult = {
+  status: "idle"
 }
+
+export type AppNodeProcessingResult = {
+  status: "processing"
+}
+
+export type AppNodeSuccessResult = {
+  status: "success"
+  input: EngineNodeExecutionData[][]
+  output: EngineNodeExecutionData[][]
+}
+
+export type AppNodeErrorResult = {
+  status: "error"
+  error: string
+}
+
+export type AppNodeResult =
+  | AppNodeIdleResult
+  | AppNodeProcessingResult
+  | AppNodeSuccessResult
+  | AppNodeErrorResult
 
 export type AppNodeComponentProps = {
   node: NodeProps<AppNode>
+}
+
+export type AppNodePropertiesComponentProps = {
+  node: AppNode
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
 export type AppEdgeComponentProps = {
@@ -37,7 +64,9 @@ export type AppEdgeComponentProps = {
 
 export type AppNodeComponent = {
   playgroundComponent: (props: AppNodeComponentProps) => React.JSX.Element
-  propertiesComponent: (props: AppNodeComponentProps) => React.JSX.Element
+  propertiesComponent: (
+    props: AppNodePropertiesComponentProps
+  ) => React.JSX.Element
   edgeComponent: (props: AppEdgeComponentProps) => React.JSX.Element
   icon: LucideIcon
 }

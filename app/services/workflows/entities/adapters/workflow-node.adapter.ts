@@ -40,7 +40,7 @@ export const toPlaygroundData = (workflow?: Workflow): PlaygroundData => {
         name: node.description.name,
         displayName: node.description.displayName,
         parameters: node.description.parameters,
-        _state: {
+        result: {
           status: "idle",
         },
       },
