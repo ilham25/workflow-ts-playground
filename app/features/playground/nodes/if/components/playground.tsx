@@ -9,7 +9,7 @@ export const IfNodePlayground = ({ node }: AppNodeComponentProps) => {
   return (
     <BaseNodeComponent node={node}>
       <Icon />
-      <Handle type="target" position={Position.Left} />
+      <Handle type="target" id="input-0" position={Position.Left} />
       <Handle
         type="source"
         position={Position.Right}

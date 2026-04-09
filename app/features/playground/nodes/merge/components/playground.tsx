@@ -25,7 +25,7 @@ export const MergeNodePlayground = ({ node }: AppNodeComponentProps) => {
           top: 60,
         }}
       />
-      <Handle type="source" position={Position.Right} />
+      <Handle type="source" id="output-0" position={Position.Right} />
     </BaseNodeComponent>
   )
 }
