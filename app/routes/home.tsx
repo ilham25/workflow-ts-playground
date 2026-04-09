@@ -14,6 +14,8 @@ import {
 } from "@xyflow/react"
 import { edgeTypes, nodeTypes } from "~/features/playground/nodes"
 import type { AppEdge, AppNode } from "~/features/playground/types/app-node"
+import { Button } from "~/components/ui/button"
+import { useWorkflowExecution } from "~/services/workflows/hooks/use-workflow-execution"
 
 const initialNodes: AppNode[] = [
   {
@@ -134,8 +136,10 @@ export default function Home() {
     []
   )
 
+  const { execute } = useWorkflowExecution("workflow-002")
+
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div className="relative h-screen w-screen">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -147,6 +151,17 @@ export default function Home() {
       >
         <Background variant={BackgroundVariant.Dots} />
       </ReactFlow>
+
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+        <Button
+          size={"lg"}
+          onClick={() => {
+            execute({ jobId: "job-id" })
+          }}
+        >
+          Execute Workflow
+        </Button>
+      </div>
     </div>
   )
 }

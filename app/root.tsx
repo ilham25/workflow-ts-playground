@@ -10,6 +10,7 @@ import {
 import type { Route } from "./+types/root"
 import "./app.css"
 import "@xyflow/react/dist/style.css"
+import Providers from "./providers"
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -21,7 +22,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <Providers>{children}</Providers>
         <ScrollRestoration />
         <Scripts />
       </body>
