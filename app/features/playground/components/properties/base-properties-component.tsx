@@ -46,8 +46,8 @@ export const BasePropertiesComponent = ({
             <Badge>{node.data.result.status}</Badge>
           </div>
         </DialogHeader>
-        <div className="grid max-h-[80dvh] grid-cols-3 gap-2">
-          <div className="col-span-1 h-[50dvh] w-full overflow-auto rounded-md border p-2">
+        <div className="grid h-[80dvh] grid-cols-3 gap-2">
+          <div className="col-span-1 h-full w-full overflow-auto rounded-md border p-2">
             <Label className="mb-2">Input</Label>
             {node.data.result.status !== "success" && (
               <Empty>
@@ -96,7 +96,7 @@ export const BasePropertiesComponent = ({
             )}
           </div>
           <div className="col-span-1 rounded-md border p-2">{children}</div>
-          <div className="col-span-1 h-[50dvh] w-full overflow-auto rounded-md border p-2">
+          <div className="col-span-1 h-full w-full overflow-auto rounded-md border p-2">
             <Label className="mb-2">Output</Label>
             {node.data.result.status !== "success" && (
               <Empty>

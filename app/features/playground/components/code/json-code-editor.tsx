@@ -1,6 +1,6 @@
 import { json } from "@codemirror/lang-json"
 import CodeMirror from "@uiw/react-codemirror"
-
+import { EditorView } from "@codemirror/view"
 interface JsonCodeEditorProps {
   value: string
 }
@@ -12,7 +12,7 @@ export const JsonCodeEditor = ({ value }: JsonCodeEditorProps) => {
         value={value}
         height="100%"
         theme="light"
-        extensions={[json()]}
+        extensions={[json(), EditorView.lineWrapping]}
         readOnly
         basicSetup={{ lineNumbers: false }}
       />

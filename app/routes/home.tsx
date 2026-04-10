@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { ReactFlow, Background, BackgroundVariant } from "@xyflow/react"
 import { appNodeComponents, nodeTypes } from "~/features/playground/nodes"
 import type { AppNode } from "~/features/playground/types/app-node"
@@ -9,52 +8,18 @@ import { usePlaygroundData } from "~/features/playground/hooks/use-playground-da
 const workflowId = "workflow-002"
 
 export default function Home() {
-  const { edges, setNodes, nodes, onNodesChange, onEdgesChange, onConnect } =
-    usePlaygroundData(workflowId)
-  const { execute } = useWorkflowExecution((data) => {
-    setNodes((prev) =>
-      prev.map((node): AppNode => {
-        if (node.id !== data.node.description.name) return node
-
-        switch (data.status) {
-          case "idle":
-            return {
-              ...node,
-              data: { ...node.data, result: { status: "idle" } },
-            } as AppNode
-          case "processing":
-            return {
-              ...node,
-              data: { ...node.data, result: { status: "processing" } },
-            } as AppNode
-          case "success":
-            return {
-              ...node,
-              data: {
-                ...node.data,
-                result: {
-                  status: "success",
-                  input: data.data.input,
-                  output: data.data.output,
-                },
-              },
-            } as AppNode
-          case "error":
-            return {
-              ...node,
-              data: {
-                ...node.data,
-                result: { status: "error", error: data.data.error },
-              },
-            } as AppNode
-          default:
-            return node
-        }
-      })
-    )
-  })
-
-  const [activeNode, setActiveNode] = useState<AppNode | null>(null)
+  const {
+    edges,
+    nodes,
+    onNodesChange,
+    setNodeResult,
+    onEdgesChange,
+    onConnect,
+    resetNodeResult,
+    selectNode,
+    activeNode,
+  } = usePlaygroundData(workflowId)
+  const { execute } = useWorkflowExecution(setNodeResult)
 
   const Properties = !activeNode
     ? null
@@ -71,7 +36,7 @@ export default function Home() {
         nodeTypes={nodeTypes}
         fitView
         onNodeClick={(_, node) => {
-          setActiveNode(node)
+          selectNode(node.id)
         }}
         snapToGrid
       >
@@ -84,7 +49,7 @@ export default function Home() {
           open={Boolean(activeNode)}
           onOpenChange={(open) => {
             if (!open) {
-              setActiveNode(null)
+              selectNode(null)
             }
           }}
           inputNames={[]}
@@ -96,20 +61,7 @@ export default function Home() {
         <Button
           size={"lg"}
           onClick={() => {
-            setNodes((nodes) =>
-              nodes.map(
-                (node) =>
-                  ({
-                    ...node,
-                    data: {
-                      ...node.data,
-                      result: {
-                        status: "idle",
-                      },
-                    },
-                  }) as AppNode
-              )
-            )
+            resetNodeResult()
             execute({ jobId: "job-001", workflowId })
           }}
         >
