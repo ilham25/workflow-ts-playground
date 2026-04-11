@@ -15,6 +15,7 @@ export interface WorkflowNode {
   name: string
   type: AppNodeTypes
   parameters: BaseNodeParameters
+  position: { x: number; y: number }
 }
 
 export interface WorkflowNodeConnection {

@@ -86,7 +86,6 @@ export const usePlaygroundStore = create<PlaygroundStore>()(
       })
     },
     resetNodeResult() {
-      console.log("reset")
       set((s) => {
         s.nodes = s.nodes.map((n) => {
           n.data.result = { status: "idle" }

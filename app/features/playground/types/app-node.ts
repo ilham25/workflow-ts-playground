@@ -69,7 +69,6 @@ export type AppNodeComponent = {
   propertiesComponent: (
     props: AppNodePropertiesComponentProps
   ) => React.JSX.Element
-  edgeComponent: (props: AppEdgeComponentProps) => React.JSX.Element
   icon: LucideIcon
 }
 

@@ -1,5 +1,4 @@
 import type {
-  AppEdgeComponentProps,
   AppNodeComponentProps,
   AppNodeComponentType,
   AppNodeTypes,
@@ -42,33 +41,5 @@ export const nodeTypes: Record<
   merge: (node) =>
     appNodeComponents.merge.playgroundComponent({
       node,
-    }),
-}
-
-export const edgeTypes: Record<
-  AppNodeTypes,
-  ComponentType<AppEdgeComponentProps["edge"]>
-> = {
-  trigger: (edge) => {
-    edge.data
-    return appNodeComponents.trigger.edgeComponent({
-      edge,
-    })
-  },
-  httpRequest: (edge) =>
-    appNodeComponents.httpRequest.edgeComponent({
-      edge,
-    }),
-  if: (edge) =>
-    appNodeComponents.if.edgeComponent({
-      edge,
-    }),
-  log: (edge) =>
-    appNodeComponents.log.edgeComponent({
-      edge,
-    }),
-  merge: (edge) =>
-    appNodeComponents.merge.edgeComponent({
-      edge,
     }),
 }

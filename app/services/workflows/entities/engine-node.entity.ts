@@ -21,6 +21,7 @@ export interface BaseNodeTypeDescription {
   input: BaseNodeInput[]
   output: BaseNodeOutput[]
   parameters: BaseNodeParameters
+  position: { x: number; y: number }
 }
 
 // Engine Nodes

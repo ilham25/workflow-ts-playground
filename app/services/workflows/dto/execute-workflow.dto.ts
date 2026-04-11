@@ -1,4 +1,4 @@
 export interface ExecuteWorkflowDTO {
-  jobId: string
+  jobId?: string
   workflowId: string
 }

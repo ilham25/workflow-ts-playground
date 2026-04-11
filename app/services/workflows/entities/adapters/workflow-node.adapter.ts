@@ -24,6 +24,7 @@ export const toPlaygroundData = (workflow?: Workflow): PlaygroundData => {
         input,
         output,
         type: node.type,
+        position: node.position,
       },
     }
   }) as EngineNodeType[]
@@ -32,10 +33,7 @@ export const toPlaygroundData = (workflow?: Workflow): PlaygroundData => {
     return {
       id: node.description.name,
       type: node.description.type,
-      position: {
-        x: index * 120,
-        y: 0,
-      },
+      position: node.description.position,
       data: {
         name: node.description.name,
         displayName: node.description.displayName,
