@@ -16,6 +16,7 @@ interface PlaygroundStore {
   nodes: AppNode[]
   edges: Edge[]
   selectedNodeId: string | null
+  isShowLog: boolean
 
   hydrate: (nodes: AppNode[], edges: Edge[]) => void
 
@@ -25,6 +26,7 @@ interface PlaygroundStore {
   selectNode: (id: string | null) => void
   setNodeResult: (eventData: EngineNodeUpdateEvent["data"]) => void
   resetNodeResult: () => void
+  toggleLog: () => void
 }
 
 export const usePlaygroundStore = create<PlaygroundStore>()(
@@ -32,6 +34,8 @@ export const usePlaygroundStore = create<PlaygroundStore>()(
     edges: [],
     nodes: [],
     selectedNodeId: null,
+    isShowLog: false,
+
     hydrate(nodes, edges) {
       set({ nodes, edges })
     },
@@ -91,6 +95,12 @@ export const usePlaygroundStore = create<PlaygroundStore>()(
           n.data.result = { status: "idle" }
           return n
         })
+      })
+    },
+
+    toggleLog() {
+      set((s) => {
+        s.isShowLog = !s.isShowLog
       })
     },
   }))

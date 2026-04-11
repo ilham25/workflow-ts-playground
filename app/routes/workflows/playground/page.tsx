@@ -5,6 +5,8 @@ import { Button } from "~/components/ui/button"
 import { useWorkflowExecution } from "~/services/workflows/hooks/use-workflow-execution"
 import { usePlaygroundData } from "~/features/playground/hooks/use-playground-data"
 import { useParams } from "react-router"
+import { SquareTerminalIcon, TerminalIcon } from "lucide-react"
+import { cn } from "~/lib/utils"
 
 export default function Page() {
   const { workflowId } = useParams<{ workflowId: string }>()
@@ -18,6 +20,8 @@ export default function Page() {
     resetNodeResult,
     selectNode,
     activeNode,
+    toggleLog,
+    isShowLog,
   } = usePlaygroundData(workflowId!)
   const { execute } = useWorkflowExecution(setNodeResult)
 
@@ -26,7 +30,7 @@ export default function Page() {
     : appNodeComponents[activeNode.type].propertiesComponent
 
   return (
-    <div className="relative h-screen w-screen">
+    <div className="relative h-full w-full">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -56,6 +60,21 @@ export default function Page() {
           outputNames={[]}
         />
       )}
+
+      <div className="absolute bottom-10 left-4 flex items-center gap-2">
+        <Button
+          size={"icon-lg"}
+          variant={"outline"}
+          className={cn(
+            "bg-background",
+            isShowLog &&
+              "border-foreground bg-foreground/95 text-background hover:bg-foreground/80 hover:text-background"
+          )}
+          onClick={toggleLog}
+        >
+          <SquareTerminalIcon />
+        </Button>
+      </div>
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
         <Button
